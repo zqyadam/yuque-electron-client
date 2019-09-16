@@ -52,7 +52,8 @@ function createWindow() {
   });
 
   mainWindow.loadURL("http://www.yuque.com");
-  mainWindow.setMenu(null);
+  Menu.setApplicationMenu(null);
+
   mainWindow.maximize();
 
   mainWindow.on("closed", function() {
