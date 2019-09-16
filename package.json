@@ -4,7 +4,8 @@
   "description": "一个Electron封装的语雀客户端",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "electron-builder"
   },
   "repository": "https://github.com/zqyadam/yuque-electron-client",
   "keywords": [
@@ -16,5 +17,31 @@
   "devDependencies": {
     "electron": "^6.0.9",
     "electron-builder": "^21.2.0"
+  },
+  "build": {
+    "appId": "yuque-electron.app",
+    "productName":"语雀",
+    "asar": true,
+    "files": [
+      "**/*",
+      "!node_modules/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "images/icon_2x.png",
+      "artifactName": "${productName}-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "allowToChangeInstallationDirectory": true,
+      "oneClick": false,
+      "perMachine": false
+    }
   }
 }
