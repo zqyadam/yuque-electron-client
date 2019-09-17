@@ -1,20 +1,14 @@
-// Modules to control application life and create native browser window
 const { app, BrowserWindow, Tray, Menu } = require("electron");
 const path = require("path");
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
-let isMainWindowShow = true;
 
 function showMainWindow() {
   mainWindow.show();
-  isMainWindowShow = true;
 }
 
 function hideMainWindow() {
   mainWindow.hide();
-  isMainWindowShow = false;
 }
 
 function createTray() {
@@ -40,8 +34,29 @@ function createTray() {
   appTray.setToolTip("语雀本地端");
   appTray.setContextMenu(contextMenu);
   appTray.on("click", e => {
-    isMainWindowShow ? hideMainWindow() : showMainWindow();
+    mainWindow.isVisible() ? hideMainWindow() : showMainWindow();
   });
+}
+
+function createMenu() {
+  var menu = Menu.buildFromTemplate([
+    {
+      label: "后退",
+      type: "normal",
+      click: () => {
+        mainWindow.webContents.goBack();
+      }
+    },
+    {
+      label: "前进",
+      type: "normal",
+      click: () => {
+        mainWindow.webContents.goForward();
+      }
+    }
+  ]);
+
+  mainWindow.setMenu(menu);
 }
 
 function createWindow() {
@@ -52,19 +67,21 @@ function createWindow() {
   });
 
   mainWindow.loadURL("http://www.yuque.com");
+
   Menu.setApplicationMenu(null);
 
-  mainWindow.maximize();
+  createTray();
+  createMenu();
 
   mainWindow.on("closed", function() {
     mainWindow = null;
   });
 
-  createTray();
+  // mainWindow.once("ready-to-show", () => {
+  //   mainWindow.show();
+  // });
 
-  mainWindow.once("ready-to-show", () => {
-    mainWindow.show();
-  });
+  mainWindow.maximize();
 }
 
 app.on("ready", createWindow);
