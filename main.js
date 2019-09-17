@@ -76,11 +76,7 @@ function createWindow() {
   mainWindow.on("closed", function() {
     mainWindow = null;
   });
-
-  // mainWindow.once("ready-to-show", () => {
-  //   mainWindow.show();
-  // });
-
+  
   mainWindow.maximize();
 }
 

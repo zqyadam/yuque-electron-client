@@ -22,3 +22,6 @@ yarn start
 yarn dist
 ```
 
+## 截个图
+
+![登录页截图](./snapshot/login.png)
