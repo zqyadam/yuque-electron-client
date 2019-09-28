@@ -23,6 +23,14 @@ function createTray() {
       }
     },
     {
+      label: "隐藏窗口",
+      type: "normal",
+      click: () => {
+        hideMainWindow();
+      }
+    },
+    { type: "separator" },
+    {
       label: "退出",
       type: "normal",
       click: () => {
@@ -76,7 +84,7 @@ function createWindow() {
   mainWindow.on("closed", function() {
     mainWindow = null;
   });
-  
+
   mainWindow.maximize();
 }
 
