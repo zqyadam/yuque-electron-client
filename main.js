@@ -51,20 +51,19 @@ function createMenu() {
     {
       label: "后退",
       type: "normal",
-      click: () => {
-        mainWindow.webContents.goBack();
+      click: (menuItem, browserWindow, event) => {
+        browserWindow.webContents.goBack();
       }
     },
     {
       label: "前进",
       type: "normal",
-      click: () => {
-        mainWindow.webContents.goForward();
+      click: (menuItem, browserWindow, event) => {
+        browserWindow.webContents.goForward();
       }
     }
   ]);
-
-  mainWindow.setMenu(menu);
+  return menu;
 }
 
 function createWindow() {
@@ -76,10 +75,10 @@ function createWindow() {
 
   mainWindow.loadURL("http://www.yuque.com");
 
-  Menu.setApplicationMenu(null);
-
   createTray();
-  createMenu();
+  let menu = createMenu();
+
+  Menu.setApplicationMenu(menu);
 
   mainWindow.on("closed", function() {
     mainWindow = null;
